@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+
+<!-- next 3 meta lines are for switching off cache  -->
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+
+	<title>Farm Connect</title>
+	<link rel="shortcut icon" href="/img/favicon.ico" />
+
+	<link rel="stylesheet" type="text/css" media="all" href="css/smoothness/jquery-ui-1.8.16.css"/>
+	<link rel="stylesheet" type="text/css" media="all" href="css/jquery.jqplot.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/stienen.css" id="stdcss" title="Stienen BE" />
+	<!--[if IE]>
+	<link rel="stylesheet" type="text/css" media="all" href="css/stienenie.css" title="Stienen BE" />
+	<![endif]-->
+</head>
+
+<body>
+	<!-- after a load of settings, the page will be shown -->
+	<div class="ui-layout-north" id="PageHeader" style="visibility:hidden">
+		<div class="header-logo"></div>
+		<div id="toolbar" class="ui-widget-header stienen">
+			<span style="padding-left:20px">
+				<button id="print" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-print"></span><span class="ui-button-text">print</span></button>
+				<button id="refresh" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-refresh"></span><span class="ui-button-text">refresh</span></button>
+				<button id="save" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-disk"></span><span class="ui-button-text">save</span></button>
+				<button id="saveToMore" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-saveToMore "></span><span class="ui-button-text">save to more<span></button>
+			</span>
+			<span style="padding-left:20px">
+				<button id="devices_configuration" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-DeviceConfiguration"></span><span class="ui-button-text">device configuration</span></button>
+				<button id="gateways_overview" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-GatewaysOverview"></span><span class="ui-button-text">gateways overview</span></button>
+				<button id="users_configuration" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-UserConfiguration"></span><span class="ui-button-text">user configuration</span></button>
+			</span>
+			<span style="padding-left:20px">
+				<button id="alarm" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-alarm"></span><span class="ui-button-text">alarm</span></button>
+			</span>
+			<span style="padding-left:20px">
+				<button id="homeAdd" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-homeAdd"></span><span class="ui-button-text">Set as homepage</span></button>
+				<button id="homeRemove" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-homeRemove"></span><span class="ui-button-text">Remove as homepage</span></button>
+			</span>
+			<span style="padding-left:20px">
+				<button id="info" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-info"></span><span class="ui-button-text">info</span></button>
+				<button id="help" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-help"></span><span class="ui-button-text">help</span></button>
+			</span>
+			<span>
+				<img src="img/DataDefault.png" id="DataState" />
+				<input id="DBGWtime" type="text" value="" size=18em readonly>
+				<button style="padding-top:1px" id="logout" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><img src="img/icons/logout_user_green.png" height="35" width="35" /></button>
+			    <label id="UserName"></label>
+		    </span>
+		</div>
+	</div>
+	<div id="treeWest" class="ui-layout-west" style="padding-top:0px; padding-left:0px; padding-right:0px;">
+		<div id="toolbarTree" class="ui-widget-header stienen" style="padding:5px; padding-left:5px;">
+			<label id="SelectedGateway"></label><br>
+			<span>
+				<button id="prev" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-triangle-1-w"></span><span class="ui-button-text">prev</span></button>
+				<button id="next" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-triangle-1-e"></span><span class="ui-button-text">next</span></button>
+			</span>
+			<select id="devices"></select>
+		</div>
+		<div id="tree" style="margin:10px;"></div>
+	</div> 
+	<div id="main" class="ui-layout-center"></div>
+	<div id="screens" class="ui-layout-east"></div>
+	<div class="ui-layout-south ui-widget-header stienen" style="position:relative">
+		<div style="position:fixed;left:2px;">
+			<button id="bbprev" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-triangle-1-w"></span><span class="ui-button-text">prev</span></button>
+		</div>
+		<div style="position:fixed;right:2px;">
+			<button id="bbnext" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-icon ui-icon-triangle-1-e"></span><span class="ui-button-text">next</span></button>
+		</div>
+		<div id="buttonbar" style="position:absolute;right:42px;left:42px;overflow-x:scroll;"><input type="hidden" value="" id="SavedDisposition" /></div>
+	</div>
+	
+	<div id="div-dialog-dateInterval" style="display:none" title="Range">
+		<fieldset>
+			<input type="hidden" id="div-dialog-dateInterval-tableId"/>
+			<table name="deviceVariable">				
+				<tr>
+					<td><input style="text-align:center" readonly disabled id="div-dialog-dateInterval-start" type="text" name="Start" class="text ui-widget-content ui-corner-all" size="14"/></td>
+				</tr>
+				<tr>
+					<td align="center">-</td>
+				</tr>
+				<tr>
+					<td><input style="text-align:center" readonly disabled id="div-dialog-dateInterval-end" type="text" name="End" class="text ui-widget-content ui-corner-all" size="14"/></td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+	
+	<div id="div-dialog-dateAlarmInterval" style="display:none" title="Range">
+		<fieldset>
+			<input type="hidden" id="div-dialog-dateAlarmInterval-id"/>
+			<table name="dateAlarmInterval">
+				<tr>
+					<td><input style="text-align:center" readonly disabled id="div-dialog-dateAlarmInterval-start" type="text" name="Start" class="text ui-widget-content ui-corner-all" size="14"/></td>
+				</tr>
+				<tr>
+					<td align="center">-</td>
+				</tr>
+				<tr>
+					<td><input style="text-align:center" readonly disabled id="div-dialog-dateAlarmInterval-end" type="text" name="End" class="text ui-widget-content ui-corner-all" size="14"/></td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+	
+	<div id="div-dialog-SendToMore" style="display:none" title="Send to more">
+		<fieldset>
+			<input type="hidden" id="div-dialog-SendToMore-id"/>
+			<table name="sendToMore">
+				<tr>
+					<td width = "200px" align="center"><img src="img/dev/PL9200.png" style="width:42px;height:32px;"></td> 
+					<td width = "75px"></td>
+					<td width = "200px" align="center"><img src="img/icons/save-icon.png" style="width:32px;height:32px;"></td>
+				</tr>
+				<tr>
+					<td align="center"><label id="GatewayToSend"></label></td> 
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td rowspan="4" align="center"><select name="DevicesAvailable" id="DevicesAvailable" multiple="multiple" size="15" class="text ui-widget-content ui-corner-all" style="width:190px;"></td>
+					<td align="center"><button id="AddOne" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">></button></td>
+					<td rowspan="4" align="center"><select name="DevicesToSend" id="DevicesToSend" multiple="multiple" size="15" class="text ui-widget-content ui-corner-all" style="width:190px;"></td>
+				</tr>
+				<tr>
+					<td align="center"><button id="RemoveOne" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><</button></td>
+				</tr>
+				<tr>
+					<td align="center"><button id="AddAll" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">>></button></td>
+				</tr>
+				<tr>
+					<td align="center"><button id="RemoveAll" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><<</button></td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+	
+	<div id="div-dialog-confirm" style="display:none">
+		<fieldset style="width:88%;"> 
+			<label id="div-dialog-confirm-text"></label>
+			<input id="div-dialog-confirm-id" type="hidden" name="Id"/>
+		</fieldset>
+	</div>
+	<div id="div-dialog-version" style="display:none">
+		<fieldset style="width:88%;"> 
+			<label id="div-dialog-version-text"></label>
+		</fieldset>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="js/backward/ecma5extras.min.js"></script>
+<script type="text/javascript" src="js/backward/json2.min.js"></script>
+<script type="text/javascript" src="js/backward/extend.min.js"></script>
+<script type="text/javascript" src="js/extern/crypto-sha256-hmac.min.js"></script>
+<script type="text/javascript" src="js/extern/raphael-2.0.1.min.js"></script>
+<script type="text/javascript" src="js/extern/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/extern/jquery-ui-1.8.16.min.js"></script>
+<script type="text/javascript" src="js/extern/jquery.layout-1.2.0.min.js"></script>
+<script type="text/javascript" src="js/extern/jquery-tablesorter.js"></script>
+<script type="text/javascript" src="js/extern/jquery.tablesorter.widgets.js"></script>
+<script type="text/javascript" src="js/extern/jquery.tablesorter.widget-scroller.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="js/extern/jqplot/excanvas.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/extern/jqplot/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="js/extern/jqplot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+<script type="text/javascript" src="js/extern/jqplot/plugins/jqplot.enhancedLegendRenderer.min.js"></script>
+<script type="text/javascript" src="js/extern/jqplot/plugins/jqplot.cursor.min.js"></script>
+<script type="text/javascript" src="js/extern/jqplot/plugins/jqplot.highlighter.min.js"></script>
+<script type="text/javascript" src="js/index.min.js"></script>
