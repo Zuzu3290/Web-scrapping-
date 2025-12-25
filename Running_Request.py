@@ -1,25 +1,10 @@
 import requests
-import webbrowser
-import os
+import json
 
-url = "https://fc254.farmconnect.eu/"
+response = requests.get("")  #th relevant Api link or https link need to be placed for the applctaion to receiev data 
 
-# Send GET request
-response = requests.get(url)
-
-# Check if successful
-if response.status_code == 200:
-    print("Page content successfully retrieved!")
-    print(response.text[:500])  # Print first 500 characters
-
-    # Save HTML to a file
-    file_path = "farmconnect_page.html"
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(response.text)
-
-    # Open the HTML file in the default web browser
-    full_path = os.path.abspath(file_path)
-    webbrowser.open(f"file://{full_path}")
-
-else:
-    print(f"Failed to access the page. Status code: {response.status_code}")
+for data in response.json():  #json method is used to convert the response into json format
+#
+# for data in response.json()['items']:
+#then we save or print data via iterations
+#cleaninig also or preprocessing takes place here for example : if[data] == 0:
